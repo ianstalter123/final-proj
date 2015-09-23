@@ -1,8 +1,8 @@
 var CompareApp = angular.module("CompareApp", ['angularMoment','ngRoute','720kb.tooltips']);
 
-CompareApp.run(function(amMoment) {
+CompareApp.run(["amMoment", function(amMoment) {
     amMoment.changeLocale('en-gb');
-});
+}]);
 
 
 CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$routeProvider) {
