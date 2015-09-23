@@ -41,9 +41,9 @@ class ListsController < ApplicationController
 
     @list = List.new(list_params)
     #binding.pry
-    p "delivering it"
+    #p "delivering it"
     #binding.pry
-    PriceCheck.initial_price(@list).deliver_now
+    #PriceCheck.initial_price(@list).deliver_now
 
 
     if @list.save
