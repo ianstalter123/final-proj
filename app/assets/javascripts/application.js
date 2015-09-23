@@ -12,9 +12,13 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require angular/app
-//= require_tree .
 //= require angular/components/angular-tooltips
-//= require angular/components/angular-moment/angular-moment
 //= require angular/components/moment/moment
+//= require angular/components/angular-moment/angular-moment
+//= require angular/app
+//= require angular/controllers
+//= require angular/filters
+//= require_tree .
+
+
 
