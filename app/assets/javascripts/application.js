@@ -16,4 +16,5 @@
 //= require_tree .
 //= require angular/components/angular-tooltips
 //= require angular/components/angular-moment/angular-moment
+//= require angular/components/moment/moment
 
