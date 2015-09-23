@@ -28,6 +28,7 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 				$scope.lists = data.x;
 				$scope.lists2 = data.as;
 				$scope.lists3 = data.list;
+				console.log($scope.lists)
 			})
 			.error(function(data) {
 

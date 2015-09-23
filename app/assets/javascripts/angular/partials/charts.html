@@ -7,6 +7,7 @@
 
 		<div>
 
+
 			<!-- <div linear-chart chart-data="salesData"></div> -->
 
 			 
@@ -16,13 +17,13 @@
   <div class="y" style="width:{{height}}px;">{{yAxis}}</div>
   <div class="x">{{xAxis}}
 
-<span class="dot" ng-repeat ="dot in salesData" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
+<span class="dot" ng-repeat ="dot in salesData | orderBy: 'date'" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
 
 
   </div>
 
 
-  <div ng-repeat="dot in salesData" class="dot" tooltips title="{{dot.price}}" style="bottom:{{dot.price / max * height/2}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
+  <div ng-repeat="dot in salesData | orderBy: 'date'" class="dot" tooltips title="{{dot.price | currency}}" style="bottom:{{(dot.price / max * height*2)-600}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
 
 
 

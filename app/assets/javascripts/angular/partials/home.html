@@ -30,14 +30,15 @@
 							Lowest New Price:
 							{{l["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]}}
 						</div>
-      <!-- <div class="description">
-        Elliot requested permission to view your contact details
-    </div> -->
+      <div class="description">
+      <a target="_blank" href = '{{l["ItemLinks"]["ItemLink"][0]["URL"]}}'>Buy Now</a>
+    </div> 
 					</div>
 					<div class="extra content">
 						<div class="ui two buttons">
 							<div class="ui basic green button"><a ng-href='/#/new/{{l["ASIN"]}}'>Add to Watchlist</a></div>
 						</div>
+						
 					</div>
 				</div>
 			</div>
@@ -62,6 +63,9 @@
 						<div class="description">
 							Condition
 							{{k["condition"][0]["conditionDisplayName"][0]}}
+						</div>
+						<div>
+							<a target="_blank" href='{{k["viewItemURL"][0]}}'>Buy Now</a>
 						</div>
 					</div>
 					<div class="extra content">

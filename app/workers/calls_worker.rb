@@ -8,8 +8,8 @@ class CallsWorker
     req = Vacuum.new
 
     req.configure(
-        aws_access_key_id: ENV["AWSKEY"],
-        aws_secret_access_key: ENV["AWSSECRET"],
+      aws_access_key_id: ENV["AWSKEY"],
+      aws_secret_access_key: ENV["AWSSECRET"],
       associate_tag: 'tag'
     )
 
