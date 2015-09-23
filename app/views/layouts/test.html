@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="table-responsive col-md-6">
+      <table class = "table">
+				
+					<tr ng-repeat="l in lists2" >
+					
+					<td style="width:100px">
+							<img style="width:50px;" src='{{l["galleryURL"][0]}}' alt="">
+						</td>
+
+						<td style="width:100px">
+							<a >{{l["ItemAttributes"]["Title"]}}</a>
+						</td>
+						
+						<td>Price:
+							{{l["ItemAttributes"]["ListPrice"]["FormattedPrice"]}}
+							Condition:
+							{{l["Condition"]["conditionDisplayName"]}}
+						</td>
+					\
+					</tr>
+				
+
+				</table>
+  </div>
+  <div class="table-responsive col-md-6">
+      <table class = "table">
+				<tr ng-repeat="k in lists">
+				<td>
+					<img style="width:50px;" src='{{k["galleryURL"][0]}}' alt="">
+					</td>
+					<td>
+					{{k["title"][0]}}
+					</td>
+					<td>
+					{{k["sellingStatus"][0]["currentPrice"][0]["__value__"]}}
+					</td>
+					
+				</tr>
+				</table>
+  </div>
+</div>

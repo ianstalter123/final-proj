@@ -1,0 +1,36 @@
+<div ng-include src="'/assets/angular/partials/navbar.html'"></div>
+
+<div style="background: #8AC6D0;border-radius:25px"  class="ui grid">
+	<div class="two wide column"></div>
+	<div class="twelve wide column"> <h1 style="text-align:center">Price History</h1>
+
+
+		<div>
+
+			<!-- <div linear-chart chart-data="salesData"></div> -->
+
+			 
+    <div class="chart" style="width:{{width}}px; height:{{height}}px;">
+
+
+  <div class="y" style="width:{{height}}px;">{{yAxis}}</div>
+  <div class="x">{{xAxis}}
+
+<span class="dot" ng-repeat ="dot in salesData" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
+
+
+  </div>
+
+
+  <div ng-repeat="dot in salesData" class="dot" tooltips title="{{dot.price}}" style="bottom:{{dot.price / max * height/2}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
+
+
+
+
+  </div>
+</div>
+
+
+		</div>
+	</div>
+</div>

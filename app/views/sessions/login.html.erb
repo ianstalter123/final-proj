@@ -1,0 +1,40 @@
+
+
+<div class="ui divider"></div>
+	<div class= "ui relaxed grid">
+		<div id= "login" class= "seven wide column">
+			<div class="ui form">
+			<%= form_tag login_path do %>
+			<div class="field">
+			  <%= label_tag "Email" %>
+			  <%= text_field_tag :email%>
+			</div>
+			<div class="field">
+			  <%= label_tag "Password" %>
+			  <%= password_field_tag :password%>
+			</div>
+			<div class= "ui button">
+			  <%= submit_tag "Log In"%>
+			</div>
+			<% end %>
+			</div>
+			
+		</div>
+	
+	
+		<div id ="horizontalDiv" class="ui two column very 	relaxed stackable grid">
+			<div class= "ui vertical divider">
+			OR
+			</div>
+		</div>
+
+		<div id= "signupLink" class= "seven wide column">
+			<div><%= link_to "Sign Up", signup_path %>
+			</div>
+		</div>
+
+	</div>
+<div class="ui divider"></div>
+
+
+
