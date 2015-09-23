@@ -14,3 +14,6 @@
 //= require jquery_ujs
 //= require angular/app
 //= require_tree .
+//= require angular/components/angular-tooltips
+//= require angular/components/angular-moment/angular-moment
+
