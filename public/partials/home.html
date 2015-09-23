@@ -1,0 +1,91 @@
+<div ng-include src="'/assets/angular/partials/navbar.html'"></div>
+<div  ng-controller="CompareController" class="ui grid">
+
+	<div style="background: #8AC6D0; border-radius:25px" class="ui top attached button">
+	<br>
+		<input style="border-radius:25px; width:700px; margin-right:40px" placeholder="Type to filter results" ng-model="search" type="text">
+		<br>
+		<br>
+		<input style="border-radius:25px;" ng-model="term" type="text"><button ng-click="searchForItems()">search</button>
+	</div>
+	
+	<div class="four wide column">
+	<!--empty filler column-->
+
+	</div>
+
+	<div  style="height:100%" class="four wide column">
+		<div>
+			<h1 style="text-align:center">Amazon</h1>
+			<div class="ui cards">
+				<div id="mySpinner" ng-class="{ 'loader': loading}"></div>
+				<div style="border-radius:25px;" ng-repeat="(key,l) in lists2 | filter: search" class="card">
+					<div class="content">
+						<img class="right floated mini ui image" src={{l["SmallImage"]["URL"]}}>
+						<div class="header">
+						<div ng-show="lists2.length > 0"></div>
+							{{l["ItemAttributes"]["Title"]}}
+						</div>
+						<div class="meta">
+							Lowest New Price:
+							{{l["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]}}
+						</div>
+      <div class="description">
+      <a target="_blank" href = '{{l["ItemLinks"]["ItemLink"][0]["URL"]}}'>Buy Now</a>
+    </div> 
+					</div>
+					<div class="extra content">
+						<div class="ui two buttons">
+							<div class="ui basic green button"><a ng-href='/#/new/{{l["ASIN"]}}'>Add to Watchlist</a></div>
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="four wide column">
+		<div>
+			<h1 style="text-align:center">Ebay</h1>
+			<div class="ui cards">
+				<div ng-if="loading" id="mySpinner" class="loader"></div>
+				<div style="border-radius:25px;" ng-repeat="k in lists | filter: search | limitTo:13" class="card">
+					<div class="content">
+						<img style="width:80px" class="right floated mini ui image" src={{k["galleryURL"][0]}}>
+						<div class="header">
+
+						<div ng-if="lists.length > 0"></div>
+							{{k["title"][0]}}
+						</div>
+						<div class="meta">
+							{{k["sellingStatus"][0]["currentPrice"][0]["__value__"] | currency}}
+						</div>
+						<div class="description">
+							Condition
+							{{k["condition"][0]["conditionDisplayName"][0]}}
+						</div>
+						<div>
+							<a target="_blank" href='{{k["viewItemURL"][0]}}'>Buy Now</a>
+						</div>
+					</div>
+					<div class="extra content">
+						<div class="ui two buttons">
+						<!--what is the ebay item id number?-->
+
+							<div ng-click="" class="ui basic green button"><a ng-href='/#/new/{{k.itemId[0]}}'>Add to Watchlist</a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="four wide column">
+	<!--empty filler column-->
+	</div>
+	
+</div>
+
+
+<!-- </div>
+</div> -->
+

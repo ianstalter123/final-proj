@@ -12,16 +12,16 @@ CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$rou
 
     $routeProvider
       .when('/', {
-        templateUrl: '/assets/angular/partials/home.html',
+        templateUrl: '/partials/home.html',
         controller: 'CompareController'
       })
 
       .when('/new/:itemID/', {
-        templateUrl: '/assets/angular/partials/new.html',
+        templateUrl: '/partials/new.html',
         controller: 'ShowController'
       })
       .when('/charts/:itemID/', {
-        templateUrl: '/assets/angular/partials/charts.html',
+        templateUrl: '/partials/charts.html',
         controller: 'ChartController'
       })
       // .when('/signup', {
@@ -33,11 +33,11 @@ CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$rou
       //   controller: 'CompareController'
       // })
       .when('/watchlist', {
-        templateUrl: '/assets/angular/partials/watchlist.html',
+        templateUrl: '/partials/watchlist.html',
         controller: 'WatchController'
       })
       .otherwise({
-      	templateUrl: 'partials/home.html',
+      	templateUrl: '/partials/home.html',
     template: "This route isn't set!"
  	 });
 }]);
