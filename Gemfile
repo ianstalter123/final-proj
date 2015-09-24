@@ -8,6 +8,7 @@ gem 'pry'
 gem 'sidekiq'
 gem 'vacuum'
 gem 'rails_12factor', :groups => [:production]
+gem 'seed_dump'
 
 gem 'json'
 
