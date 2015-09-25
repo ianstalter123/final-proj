@@ -43,7 +43,7 @@ class ListsController < ApplicationController
     #binding.pry
     #p "delivering it"
     #binding.pry
-    #PriceCheck.initial_price(@list).deliver_now
+    PriceCheck.initial_price(@list).deliver_now
 
 
     if @list.save
