@@ -58,6 +58,7 @@ class CallsController < ApplicationController
 
       render :json => {
       :prices => @list.lprices,
+      :list => @list
 
     }
 

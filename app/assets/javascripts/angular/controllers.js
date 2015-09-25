@@ -77,6 +77,12 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 	$http.get('/' + $scope.id + '/calls/')
 		.success(function(data) {
 			$scope.prices = data.prices;
+			console.log($scope.prices)
+			$scope.list = data.list;
+			console.log($scope.list['image']);
+			console.log($scope.list['title']);
+			$scope.image = $scope.list['image']
+			$scope.title = $scope.list['title']
 
 			//generates an array of objects in order to create a simple price / time chart
 			for (var i = 0; i < $scope.prices.length; i++) {
