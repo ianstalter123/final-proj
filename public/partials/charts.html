@@ -5,41 +5,64 @@
 		
 	</div>
 	<div class="twelve wide column"> <!-- <h1 style="text-align:center" >Price History</h1> -->
-	<div style="margin: 0 auto;
-    display: block;">
-				<img style="margin: 0 auto;
-    display: block; float:left"  src="{{image}}" alt="">
-    <h2 style="text-align:center">{{title}}</h2>
+		<h2 style="text-align:center">{{title}}</h2>
 
-    </div>
-
-		<div>
+	
 
 
-			<!-- <div linear-chart chart-data="salesData"></div> -->
-
-			 
-    <div class="chart" style="width:{{width}}px; height:{{height}}px;">
+	<!-- <div linear-chart chart-data="salesData"></div> -->
 
 
-  <div class="y" style="width:{{height}}px;">{{yAxis}}</div>
-  <div class="x">{{xAxis}}
-
-<span class="dot" ng-repeat ="dot in salesData | orderBy: 'date'" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
+	<div class="chart" style="width:{{width}}px; height:{{height}}px;">
 
 
-  </div>
+		<div class="y" style="width:{{height}}px;">{{yAxis}}</div>
+		<div class="x">{{xAxis}}
+
+			<span class="dot" ng-repeat ="dot in salesData | orderBy: 'date'" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
 
 
-  <div ng-repeat="dot in salesData | orderBy: 'date'" class="dot" tooltips title="{{dot.price | currency}}" style="bottom:{{(dot.price / max * height*2)-600}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
+		</div>
 
 
+		<div ng-repeat="dot in salesData | orderBy: 'date'" class="dot" tooltips title="{{dot.price | currency}}" style="bottom:{{(dot.price / max * height*2)-600}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
 
-
-  </div>
-</div>
 
 
 		</div>
 	</div>
+</div>
+
+<div style="background-color:white;margin-top:5%; border: 1px solid black; padding:25px" class="one wide column">
+
+		<img style="width:90%" src="{{image}}" alt="">
+		<table>
+			<tbody>
+				<tr>
+					<td>cur:</td>
+					
+				</tr>
+				<tr>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>high:</td>
+				</tr>
+				<tr>
+					<td>100</td>
+				</tr>
+				<tr>
+					<td>low:</td>
+				</tr>
+				<tr>
+					<td>100</td>
+				</tr>
+			</tbody>
+		</table>
+		
+		
+	</div>
+
+
+</div>
 </div>
