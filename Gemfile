@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 gem 'sidetiq'
 gem 'puma'
+gem 'sinatra', :require => false
 gem 'whenever', :require => false
 gem 'pry-rails'
 gem 'pry'
@@ -9,6 +10,7 @@ gem 'sidekiq'
 gem 'vacuum'
 gem 'rails_12factor', :groups => [:production]
 gem 'seed_dump'
+gem 'rspec-rails'
 
 gem 'json'
 

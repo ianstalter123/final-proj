@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   root to: 'statics#index'
   resources :users
 
-    get '/lists/:asin', to: "lists#info"
+    get '/lists/:asin/:api', to: "lists#info"
   resources :lists, only: [:index, :show, :create, :update, :destroy]
 
 
@@ -18,6 +18,9 @@ Rails.application.routes.draw do
   post '/signup', to: "sessions#create"
 
   delete 'logout', to: "sessions#logout", as: "logout"
+
+  require 'sidekiq/web'
+  mount Sidekiq::Web => '/sidekiq'
   #    root GET    /                         statics#index
   #     users GET    /users(.:format)          users#index
   #           POST   /users(.:format)          users#create

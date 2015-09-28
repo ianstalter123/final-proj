@@ -4,8 +4,6 @@ class ListsController < ApplicationController
   #controller
   #get the search working correctly with input item
   #limit the number of items returned on search
-
-
   before_action :set_list, only: [:show, :edit, :update, :destroy]
 
   # GET /lists
@@ -17,45 +15,25 @@ class ListsController < ApplicationController
       :lists => @lists
     }
     CallsWorker.perform_async()
-
   end
 
-  # GET /lists/1
-  # GET /lists/1.json
   def show
     render json: @list, status: :ok
   end
 
-  # # GET /lists/new
-  # def new
-  #   @list = List.new
-  # end
-
-  # # GET /lists/1/edit
-  # def edit
-  # end
-
-  # POST /lists
-  # POST /lists.json
   def create
 
     @list = List.new(list_params)
     #binding.pry
-    #p "delivering it"
-    #binding.pry
     PriceCheck.initial_price(@list).deliver_now
-
 
     if @list.save
       render json: @list, status: :created
     else
       render json: @list.errors, status: :unprocessable_entity
-
     end
   end
 
-  # PATCH/PUT /lists/1
-  # PATCH/PUT /lists/1.json
   def update
     if @list.update(list_params)
       render json: @list, status: :created
@@ -69,14 +47,11 @@ class ListsController < ApplicationController
   def info
 
     asin = params[:asin]
+    api = params[:api]
 
-    a = Float(asin[0]) rescue false
-    #binding.pry
 
-    #check if its an ebay ID or an amazon ID (amazon ids start with a letter, ebay with a number)
-    #ebay single item lookup
-    if a.class == Float
-
+ #gets the ebay result for one item
+    if api == "ebay"
       @x = Typhoeus.get("http://open.api.ebay.com/shopping?callname=GetSingleItem&responseencoding=JSON&appid=" + ENV["APPID"] + "&siteid=0&version=515&ItemID=" + asin, followlocation: true)
       @x = JSON.parse(@x.body)
 
@@ -86,24 +61,8 @@ class ListsController < ApplicationController
 
     else
 
-      p "not!!!"
-
-      req = Vacuum.new
-
-      req.configure(
-        aws_access_key_id: ENV["AWSKEY"],
-        aws_secret_access_key: ENV["AWSSECRET"],
-        associate_tag: 'tag'
-      )
-
-      res = req.item_lookup(
-        query: {
-          'ItemId' => asin,
-          'ResponseGroup' => 'Medium',
-      })
-
-      @z = res.to_h
-
+  #get_am is the function to get the amazon api call data for 1 item 
+      @z = List.get_am(asin)
       render :json => {
         :z => @z,
       }
@@ -125,6 +84,6 @@ class ListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def list_params
-    params.require(:list).permit(:title,:date,:item,:freq,:price,:asin,:email,:image,:last_price,:api)
+    params.require(:list).permit(:title,:date,:item,:freq,:price,:asin,:email,:image,:last_price,:api,:url)
   end
 end

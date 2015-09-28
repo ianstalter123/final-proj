@@ -16,7 +16,7 @@ CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$rou
         controller: 'CompareController'
       })
 
-      .when('/new/:itemID/', {
+      .when('/new/:itemID/:api/', {
         templateUrl: '/partials/new.html',
         controller: 'ShowController'
       })
@@ -41,4 +41,14 @@ CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$rou
     template: "This route isn't set!"
  	 });
 }]);
+
+CompareApp.directive('testSpot', function() {
+  return {
+    template: '<h1>test spot</h1>',
+    // scope: {
+    //   pokemon: "=pokemonData" 
+    // }
+  
+  };
+});
 

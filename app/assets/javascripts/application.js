@@ -18,6 +18,7 @@
 //= require angular/app
 //= require angular/controllers
 //= require angular/filters
+//= require angular/directives
 //= require_tree .
 
 

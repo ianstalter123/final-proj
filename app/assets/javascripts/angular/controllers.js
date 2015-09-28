@@ -1,7 +1,9 @@
 CompareApp.controller("CompareController", ['$scope', '$http', function($scope, $http) {
 
+//set this variable to control css animation spinner
 	$scope.loading = true;
 
+//loads all list items to be counted in navbar
 	$http.get('/lists')
 		.success(function(data) {
 			$scope.lists3 = data.lists;
@@ -9,19 +11,10 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 		})
 		.error(function(data) {});
 
+//searches for an item, make a call to the calls controller
+//and returns data from search results
 	$scope.searchForItems = function() {
 		$scope.loading = true;
-		// console.log("time to search")
-		// 	$http.get('/calls')
-		// .success(function(data) {
-
-		// 	$scope.loading = false;
-		// 	$scope.lists = data.x;
-		// 	$scope.lists2 = data.as;
-		// 	$scope.lists3 = data.list;
-		// })
-		// .error(function(data) {});
-
 		$http.get('/calls/' + $scope.term)
 			.success(function(data) {
 				$scope.loading = false;
@@ -42,6 +35,7 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 
 CompareApp.controller("WatchController", ['$scope', '$http', function($scope, $http) {
 
+//gets all of the list items in order to display on the watchlist page
 	$http.get('/lists')
 		.success(function(data) {
 			$scope.lists3 = data.lists;
@@ -55,36 +49,27 @@ CompareApp.controller("WatchController", ['$scope', '$http', function($scope, $h
 
 CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
 
+//setup for the chart page -> might be cool to put this in a directive!
 	$scope.width = 800;
 	$scope.height = 450;
 	$scope.yAxis = 'Price';
 	$scope.xAxis = '';
-
+//storage for chart data
 	$scope.salesData = [
-		// {date: 3,price: 77},
-		// {date: 4,price: 70},
-		// {date: 5,price: 60},
-		// {date: 6,price: 63},
-		// {date: 7,price: 55},
-		// {date: 8,price: 47},
-		// {date: 9,price: 55},
-		// {date: 10,price: 30}
 	];
 
-	//basically add an additional route that returns the prices for this individual list ,
-	//as opposed to returning all the lists
+//basically add an additional route that returns the prices for this individual list ,
+//as opposed to returning all the lists
 	$scope.id = $routeParams.itemID;
+//route for this lists prices and data in order to display on chart
 	$http.get('/' + $scope.id + '/calls/')
 		.success(function(data) {
 			$scope.prices = data.prices;
-			console.log($scope.prices)
 			$scope.list = data.list;
-			console.log($scope.list['image']);
-			console.log($scope.list['title']);
 			$scope.image = $scope.list['image']
 			$scope.title = $scope.list['title']
 
-			//generates an array of objects in order to create a simple price / time chart
+//pushes objects into array for use in the time chart easy iteration
 			for (var i = 0; i < $scope.prices.length; i++) {
 				$scope.salesData.push({
 					date: $scope.prices[i].date,
@@ -93,19 +78,14 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 			}
 
 			$scope.max = 0;
-
+//gets the max in order to create the chart
 			var arrLength = $scope.salesData.length;
 			for (var i = 0; i < arrLength; i++) {
-				// Find Maximum X Axis Value
+// Find Maximum X Axis Value
 				if (Number($scope.salesData[i].price) > $scope.max)
 					$scope.max = Number($scope.salesData[i].price);
 			}
 
-
-			console.log($scope.max)
-			console.log("MAXXXXXXX")
-
-			//console.log($scope.salesData)
 
 		})
 		.error(function(data) {});
@@ -117,26 +97,19 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 
 CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
 	console.log("show controller")
-	var api = ""
-	$scope.id = $routeParams.itemID;
-	//console.log(isNaN($routeParams.itemID[0]));
 
-	$scope.addToList = function(title, price, id, email, image, last_price) {
+//gets the store from the url
+	$scope.api = $routeParams.api;
+
+//for the new item form
+	$scope.id = $routeParams.itemID;
+
+//http post function - call to route
+	$scope.addToList = function(title, price, id, email, image, last_price, url, api) {
 		console.log("ADDING TO LIST _ _ _ _ _ ");
 
-	//basically checks if the id is a number or letter and 
-	//if its a letter creates amazon, otherwise ebay item
-		if (isNaN(id[0])) {
-			console.log("EBAYEBAYEBAY")
-
-			api = "amazon"
-
-		} else {
-			console.log("ZONZONZON")
-
-			api = "ebay"
-
-		}
+//gets the api from the route params and itemID from route params
+//for storing in the database 
 
 		var date = new Date()
 		console.log(date);
@@ -151,22 +124,21 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			date: date,
 			image: image,
 			last_price: last_price,
-			api: api
+			api: api,
+			url:url
 		})
 		$location.path('/watchlist')
 	}
 
-
-	//check what the first character of the ID is
-	//for ebay number, for amazon letter
-
-
-	if (isNaN($routeParams.itemID[0])) {
-		$http.get('/lists/' + $scope.id)
+//makes a different call depending on whether its amazon or ebay
+	if ($scope.api == "amazon") {
+		$http.get('/lists/' + $scope.id + '/' + $scope.api)
 			.success(function(data) {
+				console.log("RESPONSE!!!!!!!")
 				$scope.price = data.z["ItemLookupResponse"]["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]
 				$scope.item = data.z["ItemLookupResponse"]["Items"]["Item"]["ItemAttributes"]["Title"]
 				$scope.image = data.z["ItemLookupResponse"]["Items"]["Item"]["SmallImage"]["URL"]
+				$scope.url = data.z["ItemLookupResponse"]["Items"]["Item"]["ItemLinks"]["ItemLink"][0]["URL"]
 				$scope.desired_price = "$0"
 			})
 			.error(function(data) {
@@ -174,7 +146,7 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			});
 
 	} else {
-		$http.get('/lists/' + $scope.id)
+		$http.get('/lists/' + $scope.id + '/' + $scope.api)
 			.success(function(data) {
 				console.log("RESPONSE!!!!!!!")
 				console.log(data)
@@ -183,6 +155,7 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 				$scope.price = data.ebay["Item"]["ConvertedCurrentPrice"]["Value"]
 				$scope.item = data.ebay["Item"]["Title"]
 				$scope.image = data.ebay["Item"]["GalleryURL"]
+				$scope.url = data.ebay["Item"]["ViewItemURLForNaturalSearch"]
 				$scope.desired_price = "$0"
 
 			})

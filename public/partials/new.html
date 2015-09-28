@@ -26,6 +26,8 @@
   </div>
 
     <input type="hidden" name="ID" placeholder="ID" value="{{id}}">
+
+    <input type="hidden" name="url" placeholder="url" value="{{url}}">
  
     <input type="hidden" name="image" placeholder="image" value="{{image}}">
   
@@ -38,7 +40,7 @@
 
 
   
-  <button ng-click="addToList(item,price,id,email,image,last_price)" class="ui button" type="submit">Submit</button>
+  <button ng-click="addToList(item,price,id,email,image,last_price,url,api)" class="ui button" type="submit">Submit</button>
 </form>
   </div>
   
