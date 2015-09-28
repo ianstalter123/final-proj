@@ -94,7 +94,7 @@ class CallsWorker
 
 
         if @changing.price != @z["ItemLookupResponse"]["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]
-          PriceCheck.update_price(@changing, @z["ItemLookupResponse"]["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]).deliver_now
+          #PriceCheck.update_price(@changing, @z["ItemLookupResponse"]["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]).deliver_now
           #not working for some reason - need to show the last check / price
           @changing.lprices.create(date:time2,price:@z["ItemLookupResponse"]["Items"]["Item"]["OfferSummary"]["LowestNewPrice"]["FormattedPrice"])
           @changing.update(last_check: @changing.price)
