@@ -68,6 +68,15 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 			$scope.list = data.list;
 			$scope.image = $scope.list['image']
 			$scope.title = $scope.list['title']
+			$scope.clean = [];
+
+//get the high and low
+		for (var i = 0 ; i < $scope.prices.length; i++) {
+			$scope.clean.push(Number($scope.prices[i].price.substring(1)))
+		}
+		$scope.clean = $scope.clean.sort();
+		$scope.low = $scope.clean[0];
+		$scope.high = $scope.clean[$scope.clean.length-1]
 
 //pushes objects into array for use in the time chart easy iteration
 			for (var i = 0; i < $scope.prices.length; i++) {
@@ -120,7 +129,7 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			title: title,
 			price: price,
 			asin: id,
-			email: email,
+			asin: email,
 			date: date,
 			image: image,
 			last_price: last_price,
