@@ -3,7 +3,7 @@ class CallsWorker
   include Sidekiq::Worker
   include Sidetiq::Schedulable
 
-  recurrence { minutely(10) }
+  recurrence { minutely(50) }
   def perform()
     req = Vacuum.new
 
