@@ -10,7 +10,7 @@
 	
 
 
-	<!-- <div linear-chart chart-data="salesData"></div> -->
+	<!-- <div linear-chart chart-data="priceData"></div> -->
 
 
 	<div class="chart" style="width:{{width}}px; height:{{height}}px;">
@@ -19,13 +19,13 @@
 		<div class="y" style="width:{{height}}px;">{{yAxis}}</div>
 		<div class="x">{{xAxis}}
 
-			<span class="dot" ng-repeat ="dot in salesData | orderBy: 'date'" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / salesData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
+			<span class="dot" ng-repeat ="dot in priceData | orderBy: 'date'" style="background-color:#8AC6D0;bottom:{{50}}px; left:{{($index + 0.5) / priceData.length * width}}px;">{{dot.date | amDateFormat:'MM D'}}</span>
 
 
 		</div>
 
 
-		<div ng-repeat="dot in salesData | orderBy: 'date'" class="dot" tooltips title="{{dot.price | currency}}" style="bottom:{{(dot.price / max * height*2)-600}}px; left:{{($index + 0.5) / salesData.length * width}}px;"><!-- {{dot.price}} -->
+		<div ng-repeat="dot in priceData | orderBy: 'date'" class="dot" tooltips title="{{dot.price | currency}}" style="bottom:{{(dot.price / max * height*2)-600}}px; left:{{($index + 0.5) / priceData.length * width}}px;"><!-- {{dot.price}} -->
 
 
 
@@ -43,19 +43,25 @@
 					
 				</tr>
 				<tr>
-					<td>{{list.price}}</td>
+					<td style="font-size:10px">{{list.price}}</td>
 				</tr>
 				<tr>
-					<td>high:</td>
+					<td style="font-size:10px">high:</td>
 				</tr>
 				<tr>
-					<td>{{high | currency}}</td>
+					<td style="font-size:10px">{{high | currency}}</td>
 				</tr>
 				<tr>
-					<td>low:</td>
+					<td style="font-size:10px">low:</td>
 				</tr>
 				<tr>
-					<td>{{low | currency}}</td>
+					<td style="font-size:10px">{{low | currency}}</td>
+				</tr>
+				<tr>
+					<td style="font-size:10px">avg:</td>
+				</tr>
+				<tr>
+					<td style="font-size:10px">{{avg | currency}}</td>
 				</tr>
 			</tbody>
 		</table>

@@ -55,7 +55,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 	$scope.yAxis = 'Price';
 	$scope.xAxis = '';
 //storage for chart data
-	$scope.salesData = [
+	$scope.priceData = [
 	];
 
 //basically add an additional route that returns the prices for this individual list ,
@@ -78,9 +78,20 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 		$scope.low = $scope.clean[0];
 		$scope.high = $scope.clean[$scope.clean.length-1]
 
+//get the average and push to the database
+	var sum = 0;
+	for( var i = 0; i < $scope.clean.length; i++ ){
+	    sum += parseInt( $scope.clean[i], 10 ); //don't forget to add the base
+	}
+
+	$scope.avg = Math.floor(sum/$scope.clean.length);
+
+	console.log($scope.avg)
+	console.log("AVERAGE AVERAGE AVERAGE")
+
 //pushes objects into array for use in the time chart easy iteration
 			for (var i = 0; i < $scope.prices.length; i++) {
-				$scope.salesData.push({
+				$scope.priceData.push({
 					date: $scope.prices[i].date,
 					price: Number($scope.prices[i].price.substring(1))
 				})
@@ -88,11 +99,11 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 
 			$scope.max = 0;
 //gets the max in order to create the chart
-			var arrLength = $scope.salesData.length;
+			var arrLength = $scope.priceData.length;
 			for (var i = 0; i < arrLength; i++) {
 // Find Maximum X Axis Value
-				if (Number($scope.salesData[i].price) > $scope.max)
-					$scope.max = Number($scope.salesData[i].price);
+				if (Number($scope.priceData[i].price) > $scope.max)
+					$scope.max = Number($scope.priceData[i].price);
 			}
 
 
