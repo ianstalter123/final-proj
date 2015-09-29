@@ -85,7 +85,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 	}
 	$scope.avg = $scope.sum/$scope.clean.length;
 
-	$http.patch('/lists/'+$scope.id, {
+	$http.put('/lists/'+$scope.id, {
 			avg: $scope.avg.toFixed(2),
 		})
 		.success(function(data) {
