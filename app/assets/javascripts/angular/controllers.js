@@ -83,14 +83,16 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 	for( var i = 0; i < $scope.clean.length; i++ ){
 	    $scope.sum += $scope.clean[i]; //don't forget to add the base
 	}
-	
-
 	$scope.avg = $scope.sum/$scope.clean.length;
 
-	console.log($scope.avg)
-	console.log("AVERAGE AVERAGE AVERAGE")
-	console.log($scope.sum)
+	$http.patch('/lists/'+$scope.id, {
+			avg: $scope.avg.toFixed(2),
+		})
+		.success(function(data) {
+			console.log(data)
 
+		})
+		.error(function(data) {});
 //pushes objects into array for use in the time chart easy iteration
 			for (var i = 0; i < $scope.prices.length; i++) {
 				$scope.priceData.push({

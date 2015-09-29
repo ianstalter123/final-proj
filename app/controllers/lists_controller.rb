@@ -84,6 +84,6 @@ class ListsController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def list_params
-    params.require(:list).permit(:title,:date,:item,:freq,:price,:asin,:email,:image,:last_price,:api,:url)
+    params.require(:list).permit(:title,:date,:item,:freq,:price,:asin,:email,:image,:last_price,:api,:url,:avg)
   end
 end
