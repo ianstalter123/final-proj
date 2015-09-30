@@ -127,6 +127,8 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 //gets the store from the url
 	$scope.api = $routeParams.api;
 
+	$scope.drops = false;
+
 //for the new item form
 	$scope.id = $routeParams.itemID;
 
