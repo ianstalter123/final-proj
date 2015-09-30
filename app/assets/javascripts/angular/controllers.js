@@ -1,7 +1,8 @@
 CompareApp.controller("CompareController", ['$scope', '$http', function($scope, $http) {
 
 //set this variable to control css animation spinner
-	$scope.loading = true;
+	$scope.loading = false;
+	$scope.drops = true;
 
 //loads all list items to be counted in navbar
 	$http.get('/lists')
@@ -18,6 +19,7 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 		$http.get('/calls/' + $scope.term)
 			.success(function(data) {
 				$scope.loading = false;
+				$scope.drops = false;
 				$scope.lists = data.x;
 				$scope.lists2 = data.as;
 				$scope.lists3 = data.list;

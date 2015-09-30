@@ -16,7 +16,7 @@
 
 	<div  style="height:100%" class="four wide column">
 		<div>
-			<h1 style="text-align:center">Amazon</h1>
+			<h1 ng-show="!drops" style="text-align:center">Amazon</h1>
 			<div class="ui cards">
 				<div id="mySpinner" ng-class="{ 'loader': loading}"></div>
 				<div style="border-radius:25px;" ng-repeat="(key,l) in lists2 | filter: search" class="card">
@@ -46,7 +46,7 @@
 	</div>
 	<div class="four wide column">
 		<div>
-			<h1 style="text-align:center">Ebay</h1>
+			<h1 ng-show="!drops" style="text-align:center">Ebay</h1>
 			<div class="ui cards">
 				<div ng-if="loading" id="mySpinner" class="loader"></div>
 				<div style="border-radius:25px;" ng-repeat="k in lists | filter: search | limitTo:13" class="card">
@@ -79,16 +79,22 @@
 			</div>
 		</div>
 	</div>
+	
 	<div class="four wide column">
 	<!--empty filler column-->
 	</div>
 	<div class="four wide column">
 	<!--empty filler column-->
 	</div>
-	<!-- <div ng-show="loading" style="background-color:#8AC6D0; opacity:0.5%" class="sixteen wide column">
-	<h1 style="text-align:center">Recent Deals</h1>
-	<!-- <div ng-include src="'/partials/price-drops.html'"></div> -->
-	<!-- </div> --> -->
+	<div ng-show="drops" ng-show="!loading" style="background-color:#8AC6D0; border-radius:25px" class="eight wide column">
+	<div style="opacity:0.5;background-color:#93B1A7; padding:20px; border-radius:25px">
+	<h1 style="text-align:center">Should I buy it?</h1>
+	<div ng-include src="'/partials/price-drops.html'"></div>
+	</div> 
+	</div>
+	<div class="four wide column">
+	<!--empty filler column-->
+	</div>
 	
 </div>
 
