@@ -39,11 +39,12 @@
 						<img class="right floated mini ui image" src={{l["SmallImage"]["URL"]}}>
 						<div class="header">
 						<div ng-show="lists2.length > 0"></div>
-							{{l["ItemAttributes"]["Title"]}}
-						</div>
-						<div class="meta">
 							Lowest New Price:
 							{{l["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]}}
+						</div>
+						<div class="meta">
+							
+							{{l["ItemAttributes"]["Title"]}}
 						</div>
       <div class="description">
       <a target="_blank" href = '{{l["ItemLinks"]["ItemLink"][0]["URL"]}}'>Buy Now</a>
@@ -70,10 +71,11 @@
 						<div class="header">
 
 						<div ng-if="lists.length > 0"></div>
-							{{k["title"][0]}}
+							{{k["sellingStatus"][0]["currentPrice"][0]["__value__"] | currency}}
 						</div>
 						<div class="meta">
-							{{k["sellingStatus"][0]["currentPrice"][0]["__value__"] | currency}}
+							
+							{{k["title"][0]}}
 						</div>
 						<div class="description">
 							Condition

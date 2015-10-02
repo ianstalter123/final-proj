@@ -49,9 +49,11 @@ CompareApp.controller("WatchController", ['$scope', '$http', function($scope, $h
 
 }]);
 
-CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', function($scope, $http, $routeParams) {
+CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams','$window', function($scope, $http, $routeParams, $window) {
 
 //setup for the chart page -> might be cool to put this in a directive!
+    $scope.d3 = $window.d3;
+
 	$scope.width = 800;
 	$scope.height = 450;
 	$scope.yAxis = 'Price';
@@ -117,6 +119,9 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', fun
 		.error(function(data) {});
 
 	console.log("it's chart time");
+	 console.log("d3");
+    // console.log($scope.d3);
+
 
 }]);
 
