@@ -153,7 +153,7 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			title: title,
 			price: price,
 			asin: id,
-			asin: email,
+			email: email,
 			date: date,
 			image: image,
 			last_price: last_price,
