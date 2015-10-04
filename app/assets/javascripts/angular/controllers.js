@@ -154,7 +154,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				axisY: {
 					minimum: $scope.min,
 					labelFontSize: 16,
-					gridThickness: 0 
+					gridThickness: 0,
 					stripLines:[
             {
                 
@@ -168,7 +168,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				},
 				axisX: {
 					labelFontSize: 16,
-					gridThickness: 0 
+					gridThickness: 0
 					 
 				},
 				data: [{
