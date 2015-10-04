@@ -146,6 +146,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 
 
 			$scope.chart = new CanvasJS.Chart("chartContainer", {
+				animationEnabled: true,
 				zoomEnabled: true,
 				theme: 'theme1',
 				title: {
@@ -175,7 +176,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 					 
 				},
 				data: [{
-					toolTipContent: "{x}: ${y}",
+					toolTipContent: "{x}: ${y} ",
 					type: "line",
 					xValueType: "dateTime",
 					dataPoints: $scope.priceData
