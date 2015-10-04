@@ -8,7 +8,18 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 	$http.get('/lists')
 		.success(function(data) {
 			$scope.lists3 = data.lists;
+			$scope.trending = [];
+			for(var i = 0; i < $scope.lists3.length - 1; i++ ){
 
+				//check if the price is below average, if so
+				//push item into trending array
+				if(Number($scope.lists3[i].price.substring(1)) < $scope.lists3[i].avg ){
+				$scope.drop = $scope.lists3[i].avg - Number($scope.lists3[i].price.substring(1))
+				$scope.trending.push($scope.lists3[i].title + "      Price: " +
+									  $scope.lists3[i].price + " Savings: $" + $scope.drop.toFixed(2))
+				}
+			}
+				
 		})
 		.error(function(data) {});
 
