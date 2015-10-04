@@ -172,7 +172,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 					 
 				},
 				data: [{
-					type: "area",
+					type: "line",
 					xValueType: "dateTime",
 					dataPoints: $scope.priceData
 						//     {x:1443765900000,y:874.96},
