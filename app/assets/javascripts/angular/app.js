@@ -42,13 +42,35 @@ CompareApp.config(['$httpProvider','$routeProvider', function($httpProvider,$rou
  	 });
 }]);
 
-CompareApp.directive('testSpot', function() {
+CompareApp.directive("item", function() {
   return {
-    template: '<h1>test spot</h1>',
-    // scope: {
-    //   pokemon: "=pokemonData" 
-    // }
-  
-  };
-});
+    restrict: 'E',
+    scope: {},
+    link: function(scope, element, attrs) {
+      scope.current = 0;
+      scope.scrollRight = function() {
+        if (scope.current < scope.content.length - 1) {
+          console.log(scope.current)
+          scope.current += 1;
+        } else {
+          console.log(scope.current)
+          scope.current = 0;
+        }
+      };
+      scope.scrollLeft = function() {
+        if (scope.current > 0) {
+          console.log(scope.current)
+          scope.current -= 1;
+        } else {
+          console.log(scope.current)
+          scope.current = scope.content.length - 1;
+        }
+      };
+    },
+    templateUrl: '/templates/slider.html',
+    scope: {
+      content: '=imageData'
+    }
+  }
+})
 
