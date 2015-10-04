@@ -153,6 +153,9 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				},
 				axisY: {
 					minimum: $scope.min,
+					label : "Price",
+					valueFormatString:  "#,##0.##", // move comma to change formatting
+        prefix: "$",
 					labelFontSize: 16,
 					gridThickness: 0,
 					stripLines:[
@@ -172,6 +175,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 					 
 				},
 				data: [{
+					toolTipContent: "{x}: ${y}",
 					type: "line",
 					xValueType: "dateTime",
 					dataPoints: $scope.priceData
