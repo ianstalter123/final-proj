@@ -154,11 +154,12 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				axisY: {
 					minimum: $scope.min,
 					labelFontSize: 16,
+					gridThickness: 0 
 					stripLines:[
             {
                 
                 startValue:$scope.avg,
-                endValue:$scope.avg+1,                
+                endValue:$scope.avg,                
                 color:"#d8d8d8",
                 label : "Average",
                 labelFontColor: "#a8a8a8"
@@ -167,6 +168,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				},
 				axisX: {
 					labelFontSize: 16,
+					gridThickness: 0 
 					 
 				},
 				data: [{
