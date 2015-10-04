@@ -1,3 +1,4 @@
+<div ng-include src="'/partials/navbar.html'"></div>
 <div  ng-controller="CompareController" class="ui grid">
 
 	<div style="background: #8AC6D0; border-radius:25px" class="ui top attached button">
@@ -5,20 +6,11 @@
 	style="opacity: 0.5;
     background-color: #93B1A7;
     padding: 30px;
-    border-radius: 25px;
-    margin-top: 10px;"
+    border-radius: 25px;"
     >
-    	<a style="float:right;padding-left:15px;" href = "/#/" class="item">
-    Home
-  </a>
-  <a style="float:right;padding-left:15px;" href = "/#/watchlist" class="item">
-    Watchlist <i class="info circle icon">{{lists3.length}}</i>
-  </a>
- 
-	<br>
+  
 		<input style="border-radius:25px; width:700px; margin-right:40px" placeholder="Type to filter results" ng-model="search" type="text">
-		<br>
-		<br>
+		
 		<input class="ui icon input loading" style="border-radius:25px; width:300px"  placeholder="Search for products" ng-model="term" type="text"><button class="ui primary button" ng-click="searchForItems()">search</button>
 		</div>
 
