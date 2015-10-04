@@ -53,36 +53,10 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 
 	//setup for the chart page -> might be cool to put this in a directive!
 
-
-
-	$scope.priceD = []
-
-	$scope.priceC = []
-
-
-	$scope.fetchData = function() {
-		$http.get('/' + 1087 + '/calls/')
-			.then(function(data) {
-
-
-
-				$scope.prices = data['data']['prices'];
-
-				$scope.prices = $scope.prices.sort(function(a, b) {
-					return new Date(b.date) - new Date(a.date);
-				});
-
-				for (var i = 0; i < $scope.prices.length; i++) {
-					$scope.priceD.push([
-						new Date($scope.prices[i].date).getTime(),
-						Number($scope.prices[i].price.substring(1))
-					])
-				}
-
-				// console.log($scope.priceD);
-
-			});
-	}
+  $scope.changeChartType = function(chartType) {
+        $scope.chart.options.data[0].type = chartType;
+        $scope.chart.render(); //re-render the chart to display the new layout
+    }
 
 	$scope.width = 800;
 	$scope.height = 450;
