@@ -177,7 +177,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				},
 				data: [{
 					toolTipContent: "{x}: ${y} ",
-					type: "line",
+					type: "splineArea",
 					xValueType: "dateTime",
 					dataPoints: $scope.priceData
 						//     {x:1443765900000,y:874.96},
