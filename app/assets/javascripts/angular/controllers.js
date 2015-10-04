@@ -1,10 +1,10 @@
 CompareApp.controller("CompareController", ['$scope', '$http', function($scope, $http) {
 
-//set this variable to control css animation spinner
+	//set this variable to control css animation spinner
 	$scope.loading = false;
 	$scope.drops = true;
 
-//loads all list items to be counted in navbar
+	//loads all list items to be counted in navbar
 	$http.get('/lists')
 		.success(function(data) {
 			$scope.lists3 = data.lists;
@@ -12,8 +12,8 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 		})
 		.error(function(data) {});
 
-//searches for an item, make a call to the calls controller
-//and returns data from search results
+	//searches for an item, make a call to the calls controller
+	//and returns data from search results
 	$scope.searchForItems = function() {
 		$scope.loading = true;
 		$http.get('/calls/' + $scope.term)
@@ -37,7 +37,7 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 
 CompareApp.controller("WatchController", ['$scope', '$http', function($scope, $http) {
 
-//gets all of the list items in order to display on the watchlist page
+	//gets all of the list items in order to display on the watchlist page
 	$http.get('/lists')
 		.success(function(data) {
 			$scope.lists3 = data.lists;
@@ -49,23 +49,52 @@ CompareApp.controller("WatchController", ['$scope', '$http', function($scope, $h
 
 }]);
 
-CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams','$window', function($scope, $http, $routeParams, $window) {
+CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$window', function($scope, $http, $routeParams, $window) {
 
-//setup for the chart page -> might be cool to put this in a directive!
-    $scope.d3 = $window.d3;
+	//setup for the chart page -> might be cool to put this in a directive!
+
+
+
+	$scope.priceD = []
+
+	$scope.priceC = []
+
+
+	$scope.fetchData = function() {
+		$http.get('/' + 1087 + '/calls/')
+			.then(function(data) {
+
+
+
+				$scope.prices = data['data']['prices'];
+
+				$scope.prices = $scope.prices.sort(function(a, b) {
+					return new Date(b.date) - new Date(a.date);
+				});
+
+				for (var i = 0; i < $scope.prices.length; i++) {
+					$scope.priceD.push([
+						new Date($scope.prices[i].date).getTime(),
+						Number($scope.prices[i].price.substring(1))
+					])
+				}
+
+				// console.log($scope.priceD);
+
+			});
+	}
 
 	$scope.width = 800;
 	$scope.height = 450;
 	$scope.yAxis = 'Price';
 	$scope.xAxis = '';
-//storage for chart data
-	$scope.priceData = [
-	];
+	//storage for chart data
+	$scope.priceData = [];
 
-//basically add an additional route that returns the prices for this individual list ,
-//as opposed to returning all the lists
+	//basically add an additional route that returns the prices for this individual list ,
+	//as opposed to returning all the lists
 	$scope.id = $routeParams.itemID;
-//route for this lists prices and data in order to display on chart
+	//route for this lists prices and data in order to display on chart
 	$http.get('/' + $scope.id + '/calls/')
 		.success(function(data) {
 			$scope.prices = data.prices;
@@ -74,54 +103,148 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams','$wi
 			$scope.title = $scope.list['title']
 			$scope.clean = [];
 
-//get the high and low
-		for (var i = 0 ; i < $scope.prices.length; i++) {
-			$scope.clean.push(Number($scope.prices[i].price.substring(1)))
-		}
-		$scope.clean = $scope.clean.sort();
-		$scope.low = $scope.clean[0];
-		$scope.high = $scope.clean[$scope.clean.length-1]
+			$scope.prices = $scope.prices.sort(function(a, b) {
+				return new Date(b.date) - new Date(a.date);
+			});
 
-//get the average and push to the database
-	$scope.sum = 0;
-	for( var i = 0; i < $scope.clean.length; i++ ){
-	    $scope.sum += $scope.clean[i]; //don't forget to add the base
-	}
-	$scope.avg = $scope.sum/$scope.clean.length;
 
-	$http.patch('/lists/'+$scope.id, {
-			avg: $scope.avg.toFixed(2),
-		})
-		.success(function(data) {
-			console.log(data)
 
-		})
-		.error(function(data) {});
-//pushes objects into array for use in the time chart easy iteration
 			for (var i = 0; i < $scope.prices.length; i++) {
 				$scope.priceData.push({
-					date: $scope.prices[i].date,
-					price: Number($scope.prices[i].price.substring(1))
+					x: new Date($scope.prices[i].date).getTime(),
+					y: Number($scope.prices[i].price.substring(1))
 				})
 			}
 
-			$scope.max = 0;
-//gets the max in order to create the chart
+			//gets the max in order to create the chart
+			var tmp = 0;
+			$scope.min = 99999;
 			var arrLength = $scope.priceData.length;
-			for (var i = 0; i < arrLength; i++) {
-// Find Maximum X Axis Value
-				if (Number($scope.priceData[i].price) > $scope.max)
-					$scope.max = Number($scope.priceData[i].price);
+			for (var i = arrLength - 1; i >= 0; i--) {
+				tmp = $scope.priceData[i].y;
+
+				if (tmp < $scope.min) $scope.min = tmp;
+				console.log($scope.min)
 			}
+			//get the high and low
+			for (var i = 0; i < $scope.prices.length; i++) {
+				$scope.clean.push(Number($scope.prices[i].price.substring(1)))
+			}
+			$scope.clean = $scope.clean.sort();
+			$scope.low = $scope.clean[0];
+			$scope.high = $scope.clean[$scope.clean.length - 1]
+
+			//get the average and push to the database
+			$scope.sum = 0;
+			for (var i = 0; i < $scope.clean.length; i++) {
+				$scope.sum += $scope.clean[i]; //don't forget to add the base
+			}
+			$scope.avg = $scope.sum / $scope.clean.length;
+			console.log("average")
+			console.log($scope.avg)
+
+
+
+			$scope.chart = new CanvasJS.Chart("chartContainer", {
+				zoomEnabled: true,
+				theme: 'theme1',
+				title: {
+					text: $scope.title
+				},
+				axisY: {
+					minimum: $scope.min,
+					labelFontSize: 16,
+					stripLines:[
+            {
+                
+                startValue:$scope.avg,
+                endValue:$scope.avg+1,                
+                color:"#d8d8d8",
+                label : "Average",
+                labelFontColor: "#a8a8a8"
+            }
+            ]
+				},
+				axisX: {
+					labelFontSize: 16,
+					 
+				},
+				data: [{
+					type: "line",
+					xValueType: "dateTime",
+					dataPoints: $scope.priceData
+						//     {x:1443765900000,y:874.96},
+						//   {x:1443270521000,y:894.99},
+						//  {x:1443270519000,y:894.99},
+						//  {x:1443245837000,y:869.99},
+						// {x:1443245837000,y:929.95},
+						//  {x:1443205480000,y:859.49},
+						//  {x:1443205357000,y:859.49},
+						//  {x:1443130794000,y:858},
+						//  {x:1443130793000,y:858},
+						//  {x:1443130793000,y:858},
+						//  {x:1443130793000,y:858}
+
+				}]
+			});
+			$scope.chart.render();
+
+			
+
+			$http.patch('/lists/' + $scope.id, {
+					avg: $scope.avg.toFixed(2),
+				})
+				.success(function(data) {
+					console.log(data)
+
+
+				})
+				.error(function(data) {});
+			//pushes objects into array for use in the time chart easy iteration
+			// for (var i = 0; i < $scope.prices.length; i++) {
+			// 	$scope.priceData.push({
+			// 		x: new Date($scope.prices[i].date).getTime(),
+			// 		y: Number($scope.prices[i].price.substring(1))
+			// 	})
+			// }
+			//push into seperate array for use with nvd3
+			// [
+			//      	{
+			//  	        "key": "Prices",
+			//              "values": [ 
+			//              [new Date('2015-09-18 14:05:20 -0700').getTime(),875.33],
+
+
+
+			// $scope.prices=$scope.prices.sort(function(a,b){
+			// 		return new Date(b.date) - new Date(a.date);
+			// });
+
+			// for (var i = 0; i < $scope.prices.length; i++) {
+			// 	$scope.priceD.push([
+			// 		new Date($scope.prices[i].date).getTime(),
+			// 		Number($scope.prices[i].price.substring(1))
+			// 		])
+			// 	}
+
+			// console.log("PRICED")
+			// console.log($scope.priceD)
+
 
 
 		})
 		.error(function(data) {});
 
 	console.log("it's chart time");
-	 console.log("d3");
-    // console.log($scope.d3);
 
+	// $scope.fetchData();
+
+	// setInterval( function(){ 
+	// 	console.log('dadad')
+	//                        $scope.fetchData();
+
+
+	//                }, 1000);
 
 }]);
 
@@ -129,20 +252,20 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams','$wi
 CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
 	console.log("show controller")
 
-//gets the store from the url
+	//gets the store from the url
 	$scope.api = $routeParams.api;
 
 	$scope.drops = false;
 
-//for the new item form
+	//for the new item form
 	$scope.id = $routeParams.itemID;
 
-//http post function - call to route
+	//http post function - call to route
 	$scope.addToList = function(title, price, id, email, image, last_price, url, api) {
 		console.log("ADDING TO LIST _ _ _ _ _ ");
 
-//gets the api from the route params and itemID from route params
-//for storing in the database 
+		//gets the api from the route params and itemID from route params
+		//for storing in the database 
 
 		var date = new Date()
 		console.log(date);
@@ -158,12 +281,12 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			image: image,
 			last_price: last_price,
 			api: api,
-			url:url
+			url: url
 		})
 		$location.path('/watchlist')
 	}
 
-//makes a different call depending on whether its amazon or ebay
+	//makes a different call depending on whether its amazon or ebay
 	if ($scope.api == "amazon") {
 		$http.get('/lists/' + $scope.id + '/' + $scope.api)
 			.success(function(data) {

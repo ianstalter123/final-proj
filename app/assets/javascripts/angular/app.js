@@ -1,4 +1,4 @@
-var CompareApp = angular.module("CompareApp", ['angularMoment','ngRoute','720kb.tooltips']);
+var CompareApp = angular.module("CompareApp", ['angularMoment','ngRoute','720kb.tooltips','nvd3ChartDirectives']);
 
 CompareApp.run(["amMoment", function(amMoment) {
     amMoment.changeLocale('en-gb');
