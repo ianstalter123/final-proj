@@ -17,11 +17,11 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 				$scope.drop = $scope.lists3[i].avg - Number($scope.lists3[i].price.substring(1))
 				if ($scope.drop > 0) {
 				$scope.trending.push($scope.lists3[i].title + "      current price: " +
-									  $scope.lists3[i].price + " $" + $scope.drop.toFixed(2) + " below average")
+									  $scope.lists3[i].price + ", $" + $scope.drop.toFixed(2) + " below average")
 			    }
 			    else {
 			    	$scope.trending.push($scope.lists3[i].title + "  current price: " +
-									  $scope.lists3[i].price + "  $" + Math.abs($scope.drop.toFixed(2)) + " above average")
+									  $scope.lists3[i].price + " , $" + Math.abs($scope.drop.toFixed(2)) + " above average")
 
 			    }
 				
