@@ -32,7 +32,13 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 
 	//searches for an item, make a call to the calls controller
 	//and returns data from search results
+	
+
+
 	$scope.searchForItems = function() {
+		if ($scope.term !== undefined ){
+			console.log($scope.term)
+			$scope.error = false;
 		$scope.loading = true;
 		$http.get('/calls/' + $scope.term)
 			.success(function(data) {
@@ -46,8 +52,13 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 			.error(function(data) {
 
 			});
+			} else{
+	console.log("enter search term please");
+	$scope.error = true;
+}
 
 	}
+
 
 
 }]);
@@ -172,17 +183,6 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 					type: "splineArea",
 					xValueType: "dateTime",
 					dataPoints: $scope.priceData
-						//     {x:1443765900000,y:874.96},
-						//   {x:1443270521000,y:894.99},
-						//  {x:1443270519000,y:894.99},
-						//  {x:1443245837000,y:869.99},
-						// {x:1443245837000,y:929.95},
-						//  {x:1443205480000,y:859.49},
-						//  {x:1443205357000,y:859.49},
-						//  {x:1443130794000,y:858},
-						//  {x:1443130793000,y:858},
-						//  {x:1443130793000,y:858},
-						//  {x:1443130793000,y:858}
 
 				}]
 			});
@@ -199,51 +199,11 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 
 				})
 				.error(function(data) {});
-			//pushes objects into array for use in the time chart easy iteration
-			// for (var i = 0; i < $scope.prices.length; i++) {
-			// 	$scope.priceData.push({
-			// 		x: new Date($scope.prices[i].date).getTime(),
-			// 		y: Number($scope.prices[i].price.substring(1))
-			// 	})
-			// }
-			//push into seperate array for use with nvd3
-			// [
-			//      	{
-			//  	        "key": "Prices",
-			//              "values": [ 
-			//              [new Date('2015-09-18 14:05:20 -0700').getTime(),875.33],
-
-
-
-			// $scope.prices=$scope.prices.sort(function(a,b){
-			// 		return new Date(b.date) - new Date(a.date);
-			// });
-
-			// for (var i = 0; i < $scope.prices.length; i++) {
-			// 	$scope.priceD.push([
-			// 		new Date($scope.prices[i].date).getTime(),
-			// 		Number($scope.prices[i].price.substring(1))
-			// 		])
-			// 	}
-
-			// console.log("PRICED")
-			// console.log($scope.priceD)
-
-
 
 		})
 		.error(function(data) {});
 
 	console.log("it's chart time");
-
-	// $scope.fetchData();
-
-	// setInterval( function(){ 
-	// 	console.log('dadad')
-	//                        $scope.fetchData();
-
-
-	//                }, 1000);
 
 }]);
 
@@ -251,6 +211,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$location', function($scope, $http, $routeParams, $location) {
 	console.log("show controller")
 
+	$scope.error1 = false;
 	//gets the store from the url
 	$scope.api = $routeParams.api;
 
@@ -265,7 +226,8 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 
 		//gets the api from the route params and itemID from route params
 		//for storing in the database 
-
+if (email !== undefined && last_price !== undefined){
+	$scope.error1 = false;
 		var date = new Date()
 		console.log(date);
 		console.log("**********");
@@ -283,6 +245,10 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 			url: url
 		})
 		$location.path('/watchlist')
+	}else {
+		console.log("make sure your fields are filled out!")
+		$scope.error1 = true;
+	}
 	}
 
 	//makes a different call depending on whether its amazon or ebay
