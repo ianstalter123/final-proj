@@ -1,5 +1,6 @@
 CompareApp.controller("CompareController", ['$scope', '$http', function($scope, $http) {
 
+	//how much of this could i put in services
 	//set this variable to control css animation spinner
 	$scope.loading = false;
 	$scope.drops = true;
@@ -9,53 +10,52 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 		.success(function(data) {
 			$scope.lists3 = data.lists;
 			$scope.trending = [];
-			for(var i = 0; i < $scope.lists3.length - 1; i++ ){
+			for (var i = 0; i < $scope.lists3.length - 1; i++) {
 
 				//check if the price is below average, if so
 				//push item into trending array
-				
+
 				$scope.drop = $scope.lists3[i].avg - Number($scope.lists3[i].price.substring(1))
 				if ($scope.drop > 0) {
-				$scope.trending.push($scope.lists3[i].title + "      current price: " +
-									  $scope.lists3[i].price + ", $" + $scope.drop.toFixed(2) + " below average")
-			    }
-			    else {
-			    	$scope.trending.push($scope.lists3[i].title + "  current price: " +
-									  $scope.lists3[i].price + " , $" + Math.abs($scope.drop.toFixed(2)) + " above average")
+					$scope.trending.push($scope.lists3[i].title + "      current price: " +
+						$scope.lists3[i].price + ", $" + $scope.drop.toFixed(2) + " below average")
+				} else {
+					$scope.trending.push($scope.lists3[i].title + "  current price: " +
+						$scope.lists3[i].price + " , $" + Math.abs($scope.drop.toFixed(2)) + " above average")
 
-			    }
-				
+				}
+
 			}
-				
+
 		})
 		.error(function(data) {});
 
 	//searches for an item, make a call to the calls controller
 	//and returns data from search results
-	
+
 
 
 	$scope.searchForItems = function() {
-		if ($scope.term !== undefined ){
-			console.log($scope.term)
-			$scope.error = false;
-		$scope.loading = true;
-		$http.get('/calls/' + $scope.term)
-			.success(function(data) {
-				$scope.loading = false;
-				$scope.drops = false;
-				$scope.lists = data.x;
-				$scope.lists2 = data.as;
-				$scope.lists3 = data.list;
-				console.log($scope.lists)
-			})
-			.error(function(data) {
+		if ($scope.term !== undefined) {
 
-			});
-			} else{
-	console.log("enter search term please");
-	$scope.error = true;
-}
+			$scope.error = false;
+			$scope.loading = true;
+			$http.get('/calls/' + $scope.term)
+				.success(function(data) {
+					$scope.loading = false;
+					$scope.drops = false;
+					$scope.lists = data.x;
+					$scope.lists2 = data.as;
+					$scope.lists3 = data.list;
+
+				})
+				.error(function(data) {
+
+				});
+		} else {
+
+			$scope.error = true;
+		}
 
 	}
 
@@ -82,10 +82,10 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 
 	//setup for the chart page -> might be cool to put this in a directive!
 
-  $scope.changeChartType = function(chartType) {
-        $scope.chart.options.data[0].type = chartType;
-        $scope.chart.render(); //re-render the chart to display the new layout
-    }
+	$scope.changeChartType = function(chartType) {
+		$scope.chart.options.data[0].type = chartType;
+		$scope.chart.render(); //re-render the chart to display the new layout
+	}
 
 	$scope.width = 800;
 	$scope.height = 450;
@@ -119,7 +119,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				})
 			}
 
-			//gets the max in order to create the chart
+			//gets the min in order to create the chart
 			var tmp = 0;
 			$scope.min = 99999;
 			var arrLength = $scope.priceData.length;
@@ -143,8 +143,6 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				$scope.sum += $scope.clean[i]; //don't forget to add the base
 			}
 			$scope.avg = $scope.sum / $scope.clean.length;
-			console.log("average")
-			console.log($scope.avg)
 
 
 
@@ -157,26 +155,24 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 				},
 				axisY: {
 					minimum: $scope.min,
-					label : "Price",
-					valueFormatString:  "#,##0.##", // move comma to change formatting
-        prefix: "$",
+					label: "Price",
+					valueFormatString: "#,##0.##", // move comma to change formatting
+					prefix: "$",
 					labelFontSize: 16,
 					gridThickness: 0,
-					stripLines:[
-            {
-                
-                startValue:$scope.avg,
-                endValue:$scope.avg,                
-                color:"#d8d8d8",
-                label : "Average",
-                labelFontColor: "#a8a8a8"
-            }
-            ]
+					stripLines: [{
+
+						startValue: $scope.avg,
+						endValue: $scope.avg,
+						color: "#d8d8d8",
+						label: "Average",
+						labelFontColor: "#a8a8a8"
+					}]
 				},
 				axisX: {
 					labelFontSize: 16,
 					gridThickness: 0
-					 
+
 				},
 				data: [{
 					toolTipContent: "{x}: ${y} ",
@@ -188,7 +184,7 @@ CompareApp.controller("ChartController", ['$scope', '$http', '$routeParams', '$w
 			});
 			$scope.chart.render();
 
-			
+
 
 			$http.patch('/lists/' + $scope.id, {
 					avg: $scope.avg.toFixed(2),
@@ -226,29 +222,29 @@ CompareApp.controller("ShowController", ['$scope', '$http', '$routeParams', '$lo
 
 		//gets the api from the route params and itemID from route params
 		//for storing in the database 
-if (email !== undefined && last_price !== undefined){
-	$scope.error1 = false;
-		var date = new Date()
-		console.log(date);
-		console.log("**********");
-		console.log(last_price)
+		if (email !== undefined && last_price !== undefined) {
+			$scope.error1 = false;
+			var date = new Date()
+			console.log(date);
+			console.log("**********");
+			console.log(last_price)
 
-		$http.post('/lists', {
-			title: title,
-			price: price,
-			asin: id,
-			email: email,
-			date: date,
-			image: image,
-			last_price: last_price,
-			api: api,
-			url: url
-		})
-		$location.path('/watchlist')
-	}else {
-		console.log("make sure your fields are filled out!")
-		$scope.error1 = true;
-	}
+			$http.post('/lists', {
+				title: title,
+				price: price,
+				asin: id,
+				email: email,
+				date: date,
+				image: image,
+				last_price: last_price,
+				api: api,
+				url: url
+			})
+			$location.path('/watchlist')
+		} else {
+			console.log("make sure your fields are filled out!")
+			$scope.error1 = true;
+		}
 	}
 
 	//makes a different call depending on whether its amazon or ebay

@@ -12,6 +12,7 @@ class PriceCheck < ApplicationMailer
     @item = list.title,
     @image = list.image,
     @new = new_price,
+    @url = list.url
 
     mail(to: list.email)
   end
@@ -22,6 +23,7 @@ class PriceCheck < ApplicationMailer
     @price = list.price,
     @item = list.title,
     @image = list.image,
+    @url = list.url
 
     mail(to: list.email)
   end
