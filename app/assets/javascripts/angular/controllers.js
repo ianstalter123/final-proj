@@ -15,8 +15,15 @@ CompareApp.controller("CompareController", ['$scope', '$http', function($scope, 
 				//push item into trending array
 				
 				$scope.drop = $scope.lists3[i].avg - Number($scope.lists3[i].price.substring(1))
+				if ($scope.drop > 0) {
 				$scope.trending.push($scope.lists3[i].title + "      Price: " +
-									  $scope.lists3[i].price + " Change: $" + $scope.drop.toFixed(2))
+									  $scope.lists3[i].price + " trend: $" + $scope.drop.toFixed(2) + " below average")
+			    }
+			    else {
+			    	$scope.trending.push($scope.lists3[i].title + "      Price: " +
+									  $scope.lists3[i].price + " trend: $" + Math.abs($scope.drop.toFixed(2)) + " above average")
+
+			    }
 				
 			}
 				
