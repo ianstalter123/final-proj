@@ -2,131 +2,135 @@
 <div  ng-controller="CompareController" class="ui grid">
 
 	<div style="background: #8AC6D0; border-radius:25px" class="ui top attached button">
-	<div 
-	style="opacity: 0.5;
-    
-    padding: 30px;
-    border-radius: 25px;"
-    >
-  
+		<div 
+		style="opacity: 0.5;
+
+		padding: 30px;
+		border-radius: 25px;"
+		>
+
 		<div class="ui action left icon input">
-            <i class="search icon"></i>
-            <input style="width:700px; margin-right:40px;" type="text" ng-model="search" placeholder="Type to filter results" class="ng-pristine ng-untouched ng-valid">
-            
-          </div>
+			<i class="search icon"></i>
+			<input style="width:700px; margin-right:40px;" type="text" ng-model="search" placeholder="Type to filter results" class="ng-pristine ng-untouched ng-valid">
+
+		</div>
 		
 		<div class="ui action left icon input">
-            <i class="search icon"></i>
-            <input type="text" ng-model="term" placeholder="Search...">
-            <div ng-click="searchForItems()" class="ui teal button">Search</div>
-          </div>
+			<i class="search icon"></i>
+			<input type="text" ng-model="term" placeholder="Search...">
+			<div ng-click="searchForItems()" class="ui teal button">Search</div>
 		</div>
-<span style="color:red" ng-show="error">Search input cannot be blank!</span>
 	</div>
-	
-	<div class="four wide column">
+	<span style="color:red" ng-show="error">Search input cannot be blank!</span>
+</div>
+
+<div class="four wide column">
 	<!--empty filler column-->
 
-	</div>
+</div>
 
-	<div  style="height:100%" class="four wide column">
-		<div>
-			<h1 ng-show="!drops" style="text-align:center">Amazon</h1>
-			<div class="ui cards">
-				<div id="mySpinner" ng-class="{ 'loader': loading}"></div>
-				<div style="border-radius:25px;" ng-repeat="(key,l) in lists2 | filter: search" class="card">
-					<div class="content">
-						<img class="right floated mini ui image" src={{l["SmallImage"]["URL"]}}>
-						<div class="header">
+<div  style="height:100%" class="four wide column">
+	<div>
+		<h1 ng-show="!drops" style="text-align:center">Amazon</h1>
+		<div class="ui cards">
+			<div id="mySpinner" ng-class="{ 'loader': loading}"></div>
+			<div style="border-radius:25px;" ng-repeat="(key,l) in lists2 | filter: search" class="card">
+				<div class="content">
+					<img class="right floated mini ui image" src={{l["SmallImage"]["URL"]}}>
+					<div class="header">
 						<div ng-show="lists2.length > 0"></div>
-							Lowest New Price:
-							{{l["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]}}
-						</div>
-						<div class="meta">
-							
-							{{l["ItemAttributes"]["Title"]}}
-						</div>
-      <div class="description">
-      <a target="_blank" href = '{{l["ItemLinks"]["ItemLink"][0]["URL"]}}'>Buy Now</a>
-    </div> 
+						Lowest New Price:
+						{{l["OfferSummary"]["LowestNewPrice"]["FormattedPrice"]}}
 					</div>
-					<div class="extra content">
-						<div class="ui two buttons">
-							<div class="ui basic green button"><a ng-href='/#/new/{{l["ASIN"]}}/amazon/'>Add to Watchlist</a></div>
-						</div>
-						
+					<div class="meta">
+
+						{{l["ItemAttributes"]["Title"]}}
 					</div>
+					<div class="description">
+						<a target="_blank" href = '{{l["ItemLinks"]["ItemLink"][0]["URL"]}}'>Buy Now</a>
+					</div> 
+				</div>
+				<div class="extra content">
+					<div class="ui two buttons">
+						<div class="ui basic green button"><a ng-href='/#/new/{{l["ASIN"]}}/amazon/'>Add to Watchlist</a></div>
+					</div>
+
 				</div>
 			</div>
 		</div>
 	</div>
-	<div class="four wide column">
-		<div>
-			<h1 ng-show="!drops" style="text-align:center">Ebay</h1>
-			<div class="ui cards">
-				<div ng-if="loading" id="mySpinner" class="loader"></div>
-				<div style="border-radius:25px;" ng-repeat="k in lists | filter: search | limitTo:13" class="card">
-					<div class="content">
-						<img style="width:80px" class="right floated mini ui image" src={{k["galleryURL"][0]}}>
-						<div class="header">
+</div>
+<div class="four wide column">
+	<div>
+		<h1 ng-show="!drops" style="text-align:center">Ebay</h1>
+		<div class="ui cards">
+			<div ng-if="loading" id="mySpinner" class="loader"></div>
+			<div style="border-radius:25px;" ng-repeat="k in lists | filter: search | limitTo:13" class="card">
+				<div class="content">
+					<img style="width:80px" class="right floated mini ui image" src={{k["galleryURL"][0]}}>
+					<div class="header">
 
 						<div ng-if="lists.length > 0"></div>
-						    Lowest Price: <br>
-							{{k["sellingStatus"][0]["currentPrice"][0]["__value__"] | currency}}
-						</div>
-						<div class="meta">
-							
-							{{k["title"][0]}}
-						</div>
-						<div class="description">
-							Condition
-							{{k["condition"][0]["conditionDisplayName"][0]}}
-						</div>
-						<div>
-							<a target="_blank" href='{{k["viewItemURL"][0]}}'>Buy Now</a>
-						</div>
+						Lowest Price: <br>
+						{{k["sellingStatus"][0]["currentPrice"][0]["__value__"] | currency}}
 					</div>
-					<div class="extra content">
-						<div class="ui two buttons">
+					<div class="meta">
+
+						{{k["title"][0]}}
+					</div>
+					<div class="description">
+						Condition
+						{{k["condition"][0]["conditionDisplayName"][0]}}
+					</div>
+					<div>
+						<a target="_blank" href='{{k["viewItemURL"][0]}}'>Buy Now</a>
+					</div>
+				</div>
+				<div class="extra content">
+					<div class="ui two buttons">
 						<!--what is the ebay item id number?-->
 
-							<div ng-click="" class="ui basic green button"><a ng-href='/#/new/{{k.itemId[0]}}/ebay/'>Add to Watchlist</a></div>
-						</div>
+						<div ng-click="" class="ui basic green button"><a ng-href='/#/new/{{k.itemId[0]}}/ebay/'>Add to Watchlist</a></div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	<div class="four wide column">
+</div>
+
+<div class="four wide column">
 	<!--empty filler column-->
-	</div>
-	<div class="four wide column">
+</div>
+<div class="four wide column">
 	<!--empty filler column-->
-	</div>
-	<div ng-show="drops" ng-show="!loading" style="background-color:#8AC6D0; border-radius:25px" class="eight wide column">
+</div>
+<div ng-show="drops" ng-show="!loading" style="background-color:#8AC6D0; border-radius:25px" class="eight wide column">
 	<div style="opacity:0.9; padding:20px; border-radius:25px">
-	<h1 style="text-align:center;color:white;">Welcome</h1>
-	<item image-data='["Search for items to find low prices from Amazon and Ebay",
-				"Click on add and enter your email to add an item to the watchlist", 
-			    "Receive email notifications when the price changes and view the 
-			     price history to see if its a good time to buy!"]'></item>
+		<div class="ui top attached label" style="
+		text-align: center;
+		">Welcome</div>
+		<item image-data='["Search for items to find low prices from Amazon and Ebay",
+		"Click on add and enter your email to add an item to the watchlist", 
+		"Receive email notifications when the price changes and view the 
+		price history to see if its a good time to buy!"]'></item>
 	</div> 
-	</div>
-	<div class="sixteen wide column">
+</div>
+<div class="sixteen wide column">
 	<!--empty filler column-->
-	</div>
-	<div class="four wide column">
+</div>
+<div class="four wide column">
 	<!--empty filler column-->
-	</div>
-	
-	<div ng-show="drops" ng-show="!loading" style="background-color:#8AC6D0; border-radius:25px" class="eight wide column">
+</div>
+
+<div ng-show="drops" ng-show="!loading" style="background-color:#8AC6D0; border-radius:25px" class="eight wide column">
 	<div style="opacity:0.9;padding:20px; border-radius:25px">
-	<h1 style="text-align:center;color:white;">Trends</h1>
-	<item image-data="trending"></item>
+		<div class="ui top attached label" style="
+		text-align: center;
+		">Trends</div>
+		<item image-data="trending"></item>
 	</div> 
-	</div>
-	
+</div>
+
 </div>
 
 
